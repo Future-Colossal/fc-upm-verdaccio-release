@@ -209,7 +209,7 @@ const main = async () => {
 
         let releaseTitle = core.getInput('release-title', { required: false }) || `${packageName} ${packageVersion}`;
 
-        exec(`npm publish '${signedTgzPath}' --registry ${core.getInput('verdaccio-registry')}`);
+        exec(`npm publish '${signedTgzPath}' --registry ${core.getInput('registry-url')}`);
     } catch (error) {
         core.setFailed(error);
     }
