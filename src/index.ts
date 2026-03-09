@@ -209,7 +209,9 @@ const main = async () => {
 
         let releaseTitle = core.getInput('release-title', { required: false }) || `${packageName} ${packageVersion}`;
 
-        exec(`npm config set //registry.futurecolossal.com/:_authToken=NmNmMmY5NDY2ZjkzOGI4OTE1MDE4YWY2OTQyNTU1MGQ6MjMyYTRhYWIyZjBlZWRmNWEwOTFjM2Y4Nzc3Mw==`);
+        core.info(`npm config set`);
+        exec(`npm config set http://registry.futurecolossal.com/:_authToken=NmNmMmY5NDY2ZjkzOGI4OTE1MDE4YWY2OTQyNTU1MGQ6MjMyYTRhYWIyZjBlZWRmNWEwOTFjM2Y4Nzc3Mw==`);
+        core.info(`publishing package ${signedTgzPath}  to ${core.getInput('registry-url')}`);
         exec(`npm publish '${signedTgzPath}' --registry ${core.getInput('registry-url')}`);
     } catch (error) {
         core.setFailed(error);
