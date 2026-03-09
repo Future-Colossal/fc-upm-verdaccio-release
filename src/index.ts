@@ -14,6 +14,7 @@ const outputFile = process.env.GITHUB_OUTPUT!;
 
 const main = async () => {
     try {
+        /*
         const githubToken = core.getInput('github-token', { required: false }) || process.env.GITHUB_TOKEN || undefined;
 
         if (!githubToken) {
@@ -21,6 +22,7 @@ const main = async () => {
         }
 
         const octokit = github.getOctokit(githubToken);
+        */
         const username: string = core.getInput('username', { required: true });
         const password: string = core.getInput('password', { required: true });
         const organizationId: string = core.getInput('organization-id', { required: true });
@@ -112,6 +114,7 @@ const main = async () => {
 
         core.info(`Using target commit ${commitish} for the release.`);
 
+        /*
         if (!releaseNotes) {
             const commitMessage: string = (await git(['log', '-1', '--pretty=%B', commitish])).trim();
             releaseNotes = commitMessage;
@@ -178,7 +181,7 @@ const main = async () => {
             }
             releaseNotes = finalReleaseNotes;
         }
-
+        */
         core.startGroup(`----- Release Notes -----`);
         core.info(releaseNotes);
         core.endGroup();
