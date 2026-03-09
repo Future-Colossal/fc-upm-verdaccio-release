@@ -9,6 +9,9 @@ import {
     UnityVersion
 } from '@rage-against-the-pixel/unity-cli';
 
+
+const outputFile = process.env.GITHUB_OUTPUT!;
+
 const main = async () => {
     try {
         const githubToken = core.getInput('github-token', { required: false }) || process.env.GITHUB_TOKEN || undefined;
@@ -207,12 +210,15 @@ const main = async () => {
         const signedTgzPath = tgzFiles[0];
         core.info(`Signed package created at ${signedTgzPath}`);
 
-        let releaseTitle = core.getInput('release-title', { required: false }) || `${packageName} ${packageVersion}`;
+        // Write key=value pairs to the $GITHUB_OUTPUT file
+        fs.appendFileSync(outputFile, `pathToTgz=signedTgzPath`);
 
+        /*
         core.info(`npm config set`);
-        exec(`npm config set http://registry.futurecolossal.com/:_authToken=NmNmMmY5NDY2ZjkzOGI4OTE1MDE4YWY2OTQyNTU1MGQ6MjMyYTRhYWIyZjBlZWRmNWEwOTFjM2Y4Nzc3Mw==`);
+        exec(`npm adduser --registry http://registry.futurecolossal.com/:_authToken=NmNmMmY5NDY2ZjkzOGI4OTE1MDE4YWY2OTQyNTU1MGQ6MjMyYTRhYWIyZjBlZWRmNWEwOTFjM2Y4Nzc3Mw==`);
         core.info(`publishing package ${signedTgzPath}  to ${core.getInput('registry-url')}`);
         exec(`npm publish '${signedTgzPath}' --registry ${core.getInput('registry-url')}`);
+        */
     } catch (error) {
         core.setFailed(error);
     }
