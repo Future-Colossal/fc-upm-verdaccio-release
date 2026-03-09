@@ -209,32 +209,7 @@ const main = async () => {
 
         let releaseTitle = core.getInput('release-title', { required: false }) || `${packageName} ${packageVersion}`;
 
-        const { data: release } = await octokit.rest.repos.createRelease({
-            owner: github.context.repo.owner,
-            repo: github.context.repo.repo,
-            tag_name: packageVersion,
-            name: releaseTitle,
-            body: releaseNotes,
-            generate_release_notes: false,
-            target_commitish: commitish,
-            prerelease: isPreview,
-            draft: true
-        });
-        core.info(`Release created: ${release.html_url}`);
-
-        const { data: asset } = await octokit.rest.repos.uploadReleaseAsset({
-            owner: github.context.repo.owner,
-            repo: github.context.repo.repo,
-            release_id: release.id,
-            name: path.basename(signedTgzPath),
-            data: fs.readFileSync(signedTgzPath) as unknown as string,
-            headers: {
-                'content-type': 'application/tar+gzip',
-                'content-length': fs.statSync(signedTgzPath).size
-            }
-        });
-
-        core.info(`Release asset uploaded: ${asset.browser_download_url}`);
+        exec(`npm publish '${signedTgzPath}' --registry ${core.getInput('verdaccio-registry')}`);
     } catch (error) {
         core.setFailed(error);
     }

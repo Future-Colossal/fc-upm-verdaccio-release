@@ -29,6 +29,9 @@ inputs:
     description: Optional branch name if the package release tag should be pushed to a different branch than the default branch. Pass 'none' to disable the subtree split.
     required: false
     default: 'upm'
+  verdaccio-registry:
+    description: Location of verdaccio registry.
+    required: true
 runs:
   using: node24
   main: dist/index.js
