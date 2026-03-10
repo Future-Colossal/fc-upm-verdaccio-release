@@ -32,6 +32,15 @@ inputs:
   registry-url:
     description: Location of verdaccio registry.
     required: true
+outputs:
+  download-url:
+    description: 'The browser download URL of the uploaded .tgz asset'
+  tgz-path:
+    description: 'The local path to the signed .tgz file'
+  tag:
+    description: 'The version tag used for the release'
+  release-url:
+    description: 'The URL of the created GitHub release'
 runs:
   using: node24
   main: dist/index.js

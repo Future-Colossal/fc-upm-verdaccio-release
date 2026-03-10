@@ -71718,6 +71718,11 @@ const main = async () => {
             }
         });
         core.info(`Release asset uploaded: ${asset.browser_download_url}`);
+
+        core.setOutput('download-url', asset.browser_download_url);
+        core.setOutput('tgz-path', signedTgzPath);
+        core.setOutput('tag', packageVersion);
+        core.setOutput('release-url', release.html_url);
     }
     catch (error) {
         core.setFailed(error);
